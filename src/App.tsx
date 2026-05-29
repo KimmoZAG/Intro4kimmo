@@ -80,6 +80,7 @@ const profile = {
   email: "kimmozrc@qq.com",
   github: "https://github.com/KimmoZAG",
   repo: "https://github.com/KimmoZAG/Intro4kimmo",
+  photo: `${import.meta.env.BASE_URL}profile-photo.png`,
   summary:
     "我关注大模型系统、智能体记忆、推理编排与 AI 基础设施。参与华为盘古合作项目、国家自然科学基金项目和国家科技重大专项子课题，负责从系统设计到工程落地的研发工作。",
 }
@@ -378,7 +379,11 @@ function App() {
                   </div>
                 </div>
 
-                <div className="mt-8 space-y-4">
+                <div className="mt-7 overflow-hidden rounded-[1.75rem] border border-slate-200 bg-slate-100 shadow-lg shadow-slate-950/5 dark:border-white/10 dark:bg-white/5">
+                  <img src={profile.photo} alt="张睿诚个人照片" className="h-64 w-full object-cover object-center" loading="lazy" />
+                </div>
+
+                <div className="mt-6 space-y-4">
                   <div className="rounded-3xl border border-slate-200 bg-white/80 p-5 dark:border-white/10 dark:bg-white/5">
                     <div className="flex items-center gap-3 text-sm font-bold text-slate-500 dark:text-slate-400">
                       <Briefcase className="size-4" aria-hidden="true" />

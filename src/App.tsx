@@ -10,7 +10,6 @@ import {
   Database,
   ExternalLink,
   Github,
-  GraduationCap,
   Layers3,
   Mail,
   MapPin,
@@ -362,46 +361,61 @@ function App() {
                 </div>
               ))}
             </div>
+
+            <div className="mt-5 grid max-w-xl gap-3 sm:grid-cols-[1.05fr_0.95fr]">
+              <div className="glass-panel rounded-[1.75rem] p-5 shadow-xl shadow-slate-950/5 dark:shadow-black/20">
+                <div className="flex items-center gap-3 text-sm font-black text-blue-600 dark:text-blue-300">
+                  <Database className="size-4" aria-hidden="true" />
+                  Current Focus
+                </div>
+                <p className="mt-3 text-base font-black leading-6 text-slate-950 dark:text-white">构建可靠的大模型系统</p>
+                <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">从记忆评测、推理编排到国产芯片推理引擎，关注系统抽象、稳定性与可复现评测。</p>
+              </div>
+              <div className="grid gap-3">
+                <div className="rounded-[1.5rem] bg-slate-950 p-4 text-white shadow-xl shadow-slate-950/15 dark:bg-white dark:text-slate-950">
+                  <Cpu className="mb-3 size-5" aria-hidden="true" />
+                  <p className="text-sm font-black leading-5">Python / C++<br />AI Infrastructure</p>
+                </div>
+                <a href={profile.github} target="_blank" rel="noreferrer" className="rounded-[1.5rem] border border-slate-200 bg-white/75 p-4 text-slate-950 transition-colors duration-200 hover:border-blue-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:border-blue-300/50">
+                  <Github className="mb-3 size-5 text-blue-600 dark:text-blue-300" aria-hidden="true" />
+                  <p className="text-sm font-black leading-5">GitHub<br />KimmoZAG</p>
+                </a>
+              </div>
+            </div>
           </div>
 
-          <aside className="animate-float relative mx-auto w-full max-w-md lg:ml-auto" aria-label="个人名片预览">
+          <aside className="relative mx-auto w-full max-w-md lg:ml-auto" aria-label="个人名片预览">
             <div className="orbit-ring" aria-hidden="true" />
             <Card className="hero-portrait relative overflow-hidden border-white/60 bg-white/85 p-0 shadow-2xl shadow-blue-950/10 backdrop-blur-2xl dark:border-white/10 dark:bg-slate-950/70 dark:shadow-blue-950/30">
-              <CardContent className="relative z-10 p-7 sm:p-8">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="text-sm font-bold uppercase tracking-[0.3em] text-blue-600 dark:text-blue-300">Profile Card</p>
-                    <h2 className="mt-4 text-4xl font-black tracking-[-0.05em] text-slate-950 dark:text-white">{profile.name}</h2>
-                    <p className="mt-2 font-hand text-3xl text-blue-600 dark:text-blue-300">{profile.englishName}</p>
+              <div className="relative m-4 overflow-hidden rounded-[2rem] bg-slate-100 dark:bg-slate-900 sm:m-5">
+                <img src={profile.photo} alt="张睿诚个人照片" className="h-[340px] w-full object-cover object-center sm:h-[380px]" loading="lazy" />
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-slate-950/75 via-slate-950/25 to-transparent" />
+                <div className="absolute bottom-5 left-5 right-5 text-white">
+                  <p className="text-xs font-black uppercase tracking-[0.28em] text-blue-200">Profile</p>
+                  <h2 className="mt-2 text-4xl font-black tracking-[-0.05em]">{profile.name}</h2>
+                  <p className="font-hand text-3xl text-blue-100">{profile.englishName}</p>
+                </div>
+              </div>
+
+              <CardContent className="relative z-10 space-y-4 p-5 pt-0 sm:p-6 sm:pt-0">
+                <div className="rounded-3xl border border-slate-200 bg-white/80 p-5 dark:border-white/10 dark:bg-white/5">
+                  <div className="flex items-center gap-3 text-sm font-bold text-slate-500 dark:text-slate-400">
+                    <Briefcase className="size-4" aria-hidden="true" />
+                    当前定位
                   </div>
-                  <div className="flex size-14 items-center justify-center rounded-2xl bg-slate-950 text-white dark:bg-white dark:text-slate-950">
-                    <GraduationCap className="size-7" aria-hidden="true" />
-                  </div>
+                  <p className="mt-3 text-xl font-black text-slate-950 dark:text-white"><LineBreakText text={profile.headline} /></p>
+                  <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-300"><LineBreakText text={profile.role} /></p>
                 </div>
 
-                <div className="mt-7 overflow-hidden rounded-[1.75rem] border border-slate-200 bg-slate-100 shadow-lg shadow-slate-950/5 dark:border-white/10 dark:bg-white/5">
-                  <img src={profile.photo} alt="张睿诚个人照片" className="h-64 w-full object-cover object-center" loading="lazy" />
-                </div>
-
-                <div className="mt-6 space-y-4">
-                  <div className="rounded-3xl border border-slate-200 bg-white/80 p-5 dark:border-white/10 dark:bg-white/5">
-                    <div className="flex items-center gap-3 text-sm font-bold text-slate-500 dark:text-slate-400">
-                      <Briefcase className="size-4" aria-hidden="true" />
-                      当前定位
-                    </div>
-                    <p className="mt-3 text-xl font-black text-slate-950 dark:text-white"><LineBreakText text={profile.headline} /></p>
-                    <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-300"><LineBreakText text={profile.role} /></p>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <div className="rounded-3xl border border-slate-200 bg-white/70 p-4 dark:border-white/10 dark:bg-white/5">
+                    <MapPin className="mb-3 size-5 text-blue-600 dark:text-blue-300" aria-hidden="true" />
+                    <p className="text-sm font-semibold text-slate-600 dark:text-slate-300"><LineBreakText text={profile.location} /></p>
                   </div>
-                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                    <div className="rounded-3xl border border-slate-200 bg-white/70 p-4 dark:border-white/10 dark:bg-white/5">
-                      <MapPin className="mb-3 size-5 text-blue-600 dark:text-blue-300" aria-hidden="true" />
-                      <p className="text-sm font-semibold text-slate-600 dark:text-slate-300"><LineBreakText text={profile.location} /></p>
-                    </div>
-                    <a href={profile.github} target="_blank" rel="noreferrer" className="rounded-3xl border border-slate-200 bg-white/70 p-4 transition-colors duration-200 hover:border-blue-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:border-white/10 dark:bg-white/5 dark:hover:border-blue-300/50">
-                      <Github className="mb-3 size-5 text-blue-600 dark:text-blue-300" aria-hidden="true" />
-                      <p className="text-sm font-semibold text-slate-600 dark:text-slate-300">GitHub / KimmoZAG</p>
-                    </a>
-                  </div>
+                  <a href={profile.github} target="_blank" rel="noreferrer" className="rounded-3xl border border-slate-200 bg-white/70 p-4 transition-colors duration-200 hover:border-blue-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:border-white/10 dark:bg-white/5 dark:hover:border-blue-300/50">
+                    <Github className="mb-3 size-5 text-blue-600 dark:text-blue-300" aria-hidden="true" />
+                    <p className="text-sm font-semibold text-slate-600 dark:text-slate-300">GitHub / KimmoZAG</p>
+                  </a>
                 </div>
               </CardContent>
             </Card>

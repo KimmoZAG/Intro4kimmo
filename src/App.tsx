@@ -81,7 +81,7 @@ const profile = {
   repo: "https://github.com/KimmoZAG/Intro4kimmo",
   photo: `${import.meta.env.BASE_URL}profile-photo.png`,
   summary:
-    "我关注大模型系统、智能体记忆、推理编排与 AI 基础设施。参与华为盘古合作项目、国家自然科学基金项目和国家科技重大专项子课题，负责从系统设计到工程落地的研发工作。",
+    "我关注智能体记忆、大模型KV缓存、推理编排与效能。参与国家科技重大专项子课题、国家自然科学基金项目和华为合作项目，负责从系统设计到工程落地的全栈研发工作。",
 }
 
 const features: Feature[] = [
@@ -328,7 +328,7 @@ function App() {
           <div className="animate-rise">
             <Badge variant="outline" className="mb-5 rounded-full border-blue-200 bg-blue-50 px-3 py-1 text-blue-700 dark:border-blue-400/30 dark:bg-blue-400/10 dark:text-blue-200">
               <Sparkles className="size-3.5" aria-hidden="true" />
-              AI Systems · LLM Memory · Inference Infra
+              AI Systems · AI Infra · Agent Memory
             </Badge>
             <h1 className="max-w-4xl text-5xl font-black leading-[0.95] tracking-[-0.06em] text-slate-950 dark:text-white sm:text-6xl lg:text-7xl">
               {profile.name}

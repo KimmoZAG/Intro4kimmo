@@ -75,7 +75,7 @@ const profile = {
   englishName: "Kimmo Zhang",
   headline: "华中科技大学计算机硕士\nAgent Memory / AI Infra / AI 系统",
   role: "服务计算技术与系统教育部重点实验室\n金海-廖小飞系统组",
-  location: "Wuhan, China\n2027.06 硕士毕业（预计）",
+  location: "Wuhan, China\n2027.06 硕士毕业",
   email: "kimmozrc@qq.com",
   github: "https://github.com/KimmoZAG",
   repo: "https://github.com/KimmoZAG/Intro4kimmo",

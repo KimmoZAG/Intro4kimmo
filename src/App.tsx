@@ -41,6 +41,7 @@ type Project = {
   period: string
   link: string
   linkLabel?: string
+  extraLabel?: string
   description: string
   highlights: string[]
   stack: string[]
@@ -156,7 +157,8 @@ const projects: Project[] = [
     tag: "KV Cache",
     role: "开发工程师（Python）",
     period: "2025.06 — 至今",
-    link: "https://github.com/",
+    link: "https://github.com/LMCache/LMCache",
+    extraLabel: "腾讯实习",
     description: "大模型推理 KV Cache 缓存优化。",
     highlights: [
       "KV Cache 缓存优化。",
@@ -206,18 +208,6 @@ const projects: Project[] = [
       "系统用于本科视觉课程教学，积累端到端软件开发经验。",
     ],
     stack: ["Python", "PyQt5", "PointNet++", "Point-E"],
-  },
-  {
-    title: "腾讯实习",
-    tag: "Internship",
-    role: "实习开发工程师",
-    period: "2025.07 — 2025.09",
-    link: "",
-    description: "腾讯实习经历。",
-    highlights: [
-      "实习内容待补充。",
-    ],
-    stack: ["待补充"],
   },
 ]
 
@@ -486,14 +476,21 @@ function App() {
                   </span>
                 ))}
               </div>
-              {project.link ? (
-                <a href={project.link} target="_blank" rel="noreferrer" className="mt-auto pt-6 inline-flex items-center gap-2 rounded-full text-sm font-black text-blue-600 transition-colors duration-200 hover:text-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-blue-300">
-                  {project.linkLabel || "查看项目链接"}
-                  <ExternalLink className="size-4" aria-hidden="true" />
-                </a>
-              ) : (
-                <div className="mt-auto pt-6" />
-              )}
+              <div className="mt-auto flex items-center justify-between gap-2 pt-6">
+                {project.link ? (
+                  <a href={project.link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full text-sm font-black text-blue-600 transition-colors duration-200 hover:text-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-blue-300">
+                    {project.linkLabel || "查看项目链接"}
+                    <ExternalLink className="size-4" aria-hidden="true" />
+                  </a>
+                ) : (
+                  <div />
+                )}
+                {project.extraLabel && (
+                  <Badge variant="outline" className="rounded-full border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-400/30 dark:bg-blue-400/10 dark:text-blue-200">
+                    {project.extraLabel}
+                  </Badge>
+                )}
+              </div>
             </article>
           ))}
         </div>

@@ -507,12 +507,12 @@ function App() {
               <CardContent className="p-6 sm:p-7">
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <h3 className="text-2xl font-black tracking-[-0.04em] text-slate-950 dark:text-white">{item.school}</h3>
-                    <p className="mt-2 text-base font-bold text-blue-600 dark:text-blue-300">{item.degree}</p>
+                    <h3 className="text-3xl font-black tracking-[-0.04em] text-slate-950 dark:text-white">{item.school}</h3>
+                    <p className="mt-2 text-lg font-bold text-blue-600 dark:text-blue-300">{item.degree}</p>
                   </div>
-                  <BookOpen className="size-6 text-blue-600 dark:text-blue-300" aria-hidden="true" />
+                  <BookOpen className="size-7 text-blue-600 dark:text-blue-300" aria-hidden="true" />
                 </div>
-                <div className="mt-6 space-y-3 text-sm leading-7 text-slate-600 dark:text-slate-300">
+                <div className="mt-6 space-y-3 text-base leading-7 text-slate-600 dark:text-slate-300">
                   <p><LineBreakText text={item.college} /></p>
                   <p><LineBreakText text={item.lab} /></p>
                   <div className="flex flex-wrap gap-2 pt-2">

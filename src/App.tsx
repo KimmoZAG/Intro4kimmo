@@ -63,10 +63,10 @@ type ResearchItem = {
 
 const navItems = [
   { href: "#profile", label: "主页" },
-  { href: "#strengths", label: "优势" },
-  { href: "#education", label: "教育" },
   { href: "#projects", label: "项目" },
+  { href: "#education", label: "教育" },
   { href: "#research", label: "科研" },
+  { href: "#strengths", label: "优势" },
   { href: "#contact", label: "联系" },
 ]
 
@@ -88,17 +88,17 @@ const features: Feature[] = [
   {
     icon: Target,
     title: "系统方向聚焦",
-    description: "围绕 LLM Memory、Agent Workflow 和推理引擎形成连续项目线。",
+    description: "将记忆评测、KV Cache 管理、Agent 编排串成端到端链路，在算法效果与系统开销之间做可度量的权衡。",
   },
   {
     icon: Code2,
     title: "工程落地能力强",
-    description: "熟悉 Python/C++ 混合开发、CI/CD、CLI 工具链与跨仓库协作。",
+    description: "Python/C++ 混合开发，搭配 Git 多仓库协作与 CI/CD 流水线，形成从原型到交付的工程规范闭环。",
   },
   {
     icon: Sparkles,
     title: "科研产出可验证",
-    description: "覆盖 SIGMOD、SCI、系统演示、软著与专利等可验证成果。",
+    description: "学术论文覆盖 SIGMOD、ICML、Signal Processing，知识产权覆盖软著与专利，双线并行且均有正式编号可验证。",
   },
 ]
 
@@ -423,71 +423,12 @@ function App() {
         </div>
       </section>
 
-      <section id="strengths" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:px-10">
-        <div className="mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end">
-          <div>
-            <p className="section-label">Strengths</p>
-            <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-slate-950 dark:text-white sm:text-5xl">从系统研发到科研产出</h2>
-          </div>
-        </div>
-
-        <div className="grid gap-4 md:grid-cols-3">
-          {features.map((feature, index) => {
-            const Icon = feature.icon
-            return (
-              <Card key={feature.title} className="glass-panel animate-rise border-white/70 bg-white/80 shadow-xl shadow-slate-950/5 transition-all duration-300 hover:border-blue-200 hover:shadow-blue-600/10 dark:border-white/10 dark:bg-white/5 dark:hover:border-blue-300/40" style={{ animationDelay: `${index * 120}ms` }}>
-                <CardContent className="p-6">
-                  <div className="mb-6 flex size-12 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-lg shadow-blue-600/25">
-                    <Icon className="size-5" aria-hidden="true" />
-                  </div>
-                  <h3 className="text-xl font-black tracking-[-0.03em] text-slate-950 dark:text-white">{feature.title}</h3>
-                  <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">{feature.description}</p>
-                </CardContent>
-              </Card>
-            )
-          })}
-        </div>
-      </section>
-
-      <section id="education" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:px-10">
-        <div className="mb-10">
-          <p className="section-label">Education</p>
-          <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-slate-950 dark:text-white sm:text-5xl">教育经历</h2>
-        </div>
-        <div className="grid gap-5 lg:grid-cols-2">
-          {education.map((item) => (
-            <Card key={item.school} className="glass-panel border-white/70 bg-white/80 shadow-xl shadow-slate-950/5 dark:border-white/10 dark:bg-white/5">
-              <CardContent className="p-6 sm:p-7">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <h3 className="text-2xl font-black tracking-[-0.04em] text-slate-950 dark:text-white">{item.school}</h3>
-                    <p className="mt-2 text-base font-bold text-blue-600 dark:text-blue-300">{item.degree}</p>
-                  </div>
-                  <BookOpen className="size-6 text-blue-600 dark:text-blue-300" aria-hidden="true" />
-                </div>
-                <div className="mt-6 space-y-3 text-sm leading-7 text-slate-600 dark:text-slate-300">
-                  <p><LineBreakText text={item.college} /></p>
-                  <p><LineBreakText text={item.lab} /></p>
-                  <div className="flex flex-wrap gap-2 pt-2">
-                    <Badge variant="outline" className="rounded-full border-slate-200 bg-white/70 dark:border-white/10 dark:bg-white/5">{item.period}</Badge>
-                    <Badge className="rounded-full bg-blue-600 text-white">{item.gpa}</Badge>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
-
       <section id="projects" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:px-10">
         <div className="mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end">
           <div>
             <p className="section-label">Projects</p>
             <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-slate-950 dark:text-white sm:text-5xl">代表项目</h2>
           </div>
-          <p className="max-w-xl text-base leading-7 text-slate-600 dark:text-slate-300">
-            项目按与目标岗位相关度排序，重点突出系统设计、性能优化、跨语言工程化和团队协作。
-          </p>
         </div>
 
         <div className="grid gap-5 lg:grid-cols-2">
@@ -528,6 +469,36 @@ function App() {
         </div>
       </section>
 
+      <section id="education" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:px-10">
+        <div className="mb-10">
+          <p className="section-label">Education</p>
+          <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-slate-950 dark:text-white sm:text-5xl">教育经历</h2>
+        </div>
+        <div className="grid gap-5 lg:grid-cols-2">
+          {education.map((item) => (
+            <Card key={item.school} className="glass-panel border-white/70 bg-white/80 shadow-xl shadow-slate-950/5 dark:border-white/10 dark:bg-white/5">
+              <CardContent className="p-6 sm:p-7">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <h3 className="text-2xl font-black tracking-[-0.04em] text-slate-950 dark:text-white">{item.school}</h3>
+                    <p className="mt-2 text-base font-bold text-blue-600 dark:text-blue-300">{item.degree}</p>
+                  </div>
+                  <BookOpen className="size-6 text-blue-600 dark:text-blue-300" aria-hidden="true" />
+                </div>
+                <div className="mt-6 space-y-3 text-sm leading-7 text-slate-600 dark:text-slate-300">
+                  <p><LineBreakText text={item.college} /></p>
+                  <p><LineBreakText text={item.lab} /></p>
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    <Badge variant="outline" className="rounded-full border-slate-200 bg-white/70 dark:border-white/10 dark:bg-white/5">{item.period}</Badge>
+                    <Badge className="rounded-full bg-blue-600 text-white">{item.gpa}</Badge>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+
       <section id="research" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:px-10">
         <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
           <div>
@@ -561,15 +532,38 @@ function App() {
         </div>
       </section>
 
+      <section id="strengths" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:px-10">
+        <div className="mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+          <div>
+            <p className="section-label">Strengths</p>
+            <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-slate-950 dark:text-white sm:text-5xl">从系统研发到科研产出</h2>
+          </div>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-3">
+          {features.map((feature, index) => {
+            const Icon = feature.icon
+            return (
+              <Card key={feature.title} className="glass-panel animate-rise border-white/70 bg-white/80 shadow-xl shadow-slate-950/5 transition-all duration-300 hover:border-blue-200 hover:shadow-blue-600/10 dark:border-white/10 dark:bg-white/5 dark:hover:border-blue-300/40" style={{ animationDelay: `${index * 120}ms` }}>
+                <CardContent className="p-6">
+                  <div className="mb-6 flex size-12 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-lg shadow-blue-600/25">
+                    <Icon className="size-5" aria-hidden="true" />
+                  </div>
+                  <h3 className="text-xl font-black tracking-[-0.03em] text-slate-950 dark:text-white">{feature.title}</h3>
+                  <p className="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-300">{feature.description}</p>
+                </CardContent>
+              </Card>
+            )
+          })}
+        </div>
+      </section>
+
       <section id="honors" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:px-10">
         <div className="mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end">
           <div>
             <p className="section-label">Honors & Skills</p>
             <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-slate-950 dark:text-white sm:text-5xl">荣誉与专业能力</h2>
           </div>
-          <p className="max-w-xl text-base leading-7 text-slate-600 dark:text-slate-300">
-            保留高价值荣誉，并把技能从“语言列表”升级为更贴近系统研发岗位的能力标签。
-          </p>
         </div>
 
         <div className="grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">

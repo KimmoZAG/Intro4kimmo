@@ -369,7 +369,7 @@ function App() {
                   Current Focus
                 </div>
                 <p className="mt-3 text-base font-black leading-6 text-slate-950 dark:text-white">构建可靠的大模型系统</p>
-                <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">从记忆评测、推理编排到国产芯片推理引擎，关注系统抽象、稳定性与可复现评测。</p>
+                <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">从记忆评测、推理编排到Agent搭建，关注KV Cache、系统抽象与可复现评测。</p>
               </div>
               <div className="grid gap-3">
                 <div className="rounded-[1.5rem] bg-slate-950 p-4 text-white shadow-xl shadow-slate-950/15 dark:bg-white dark:text-slate-950">
@@ -429,9 +429,6 @@ function App() {
             <p className="section-label">Strengths</p>
             <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-slate-950 dark:text-white sm:text-5xl">从系统研发到科研产出</h2>
           </div>
-          <p className="max-w-xl text-base leading-7 text-slate-600 dark:text-slate-300">
-            简历内容已按招聘阅读逻辑重新组织：先给出技术定位，再突出能被验证的项目、论文、系统演示与工程协作经验。
-          </p>
         </div>
 
         <div className="grid gap-4 md:grid-cols-3">

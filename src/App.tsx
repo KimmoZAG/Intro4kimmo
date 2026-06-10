@@ -374,7 +374,7 @@ function App() {
               <div className="grid gap-3">
                 <div className="rounded-[1.5rem] bg-slate-950 p-4 text-white shadow-xl shadow-slate-950/15 dark:bg-white dark:text-slate-950">
                   <Cpu className="mb-3 size-5" aria-hidden="true" />
-                  <p className="text-sm font-black leading-5">Python / C++<br />AI Infrastructure</p>
+                  <p className="text-sm font-black leading-5">Python / C++ / JAVA<br />Vibe coding / Skill / Agent</p>
                 </div>
                 <a href={profile.github} target="_blank" rel="noreferrer" className="rounded-[1.5rem] border border-slate-200 bg-white/75 p-4 text-slate-950 transition-colors duration-200 hover:border-blue-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:border-blue-300/50">
                   <Github className="mb-3 size-5 text-blue-600 dark:text-blue-300" aria-hidden="true" />

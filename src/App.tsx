@@ -623,13 +623,13 @@ function App() {
       </section>
 
       <section id="contact" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:px-10">
-        <div className="glass-panel overflow-hidden rounded-[2.25rem] border border-white/70 bg-slate-950 p-8 text-white shadow-2xl shadow-slate-950/20 dark:border-white/10 dark:bg-white/10 sm:p-10 lg:p-12">
+        <div className="overflow-hidden rounded-[2.25rem] border border-blue-500/30 bg-blue-600 p-8 text-white shadow-2xl shadow-blue-600/25 dark:border-blue-400/20 dark:bg-blue-700 sm:p-10 lg:p-12">
           <div className="relative z-10 grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
             <div>
-              <p className="font-hand text-3xl text-blue-300">Let's build reliable AI systems</p>
+              <p className="font-hand text-3xl text-blue-100">Let's build reliable AI systems</p>
               <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] sm:text-5xl">欢迎联系我</h2>
-              <p className="mt-5 max-w-2xl text-base leading-8 text-slate-300">
-                如果你希望了解我的项目、科研经历或工程实践，可以通过邮箱或 GitHub 与我联系。公开网页中暂不展示手机号，以降低隐私风险。
+              <p className="mt-5 max-w-2xl text-base leading-8 text-blue-50">
+                欢迎通过邮箱或 GitHub 与我交流，期待你的来信。
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">

@@ -40,6 +40,7 @@ type Project = {
   role: string
   period: string
   link: string
+  linkLabel?: string
   description: string
   highlights: string[]
   stack: string[]
@@ -124,17 +125,17 @@ const education: Education[] = [
 const projects: Project[] = [
   {
     title: "多级内存架构的流式记忆智能体",
-    tag: "LLM Memory",
+    tag: "Agent Memory",
     role: "项目研发负责人（Python）",
     period: "2025.06 — 2026.01",
-    link: "https://github.com/intellistream/neuromem",
+    link: "https://github.com/intellistream/neuromem-bench",
     description: "华为盘古合作项目。面向大模型记忆能力，构建流式评测基准和多级内存智能体。",
     highlights: [
       "提出索引与存储解耦的记忆管理架构，降低记忆表单构建复杂度。",
       "构建流式记忆评测 Pipeline，复现 MemoryBank、MemGPT、Mem0 等系统。",
       "组合多级记忆结构并优化处理路径，探索效率与准确度最优的记忆体。",
     ],
-    stack: ["Python", "LLM Memory", "Benchmark", "Agent"],
+    stack: ["Python", "Agent Memory", "Benchmark", "Agent"],
   },
   {
     title: "复合型 AI 推理编排框架 Sage",
@@ -151,11 +152,24 @@ const projects: Project[] = [
     stack: ["Python", "C++", "PyBind11", "DAG", "RAG"],
   },
   {
+    title: "LMcache",
+    tag: "KV Cache",
+    role: "开发工程师（Python）",
+    period: "2025.06 — 至今",
+    link: "https://github.com/",
+    description: "大模型推理 KV Cache 缓存优化。",
+    highlights: [
+      "KV Cache 缓存优化。",
+      "推理时延降低。",
+    ],
+    stack: ["Python", "KV Cache", "Inference"],
+  },
+  {
     title: "面向国产芯片的大模型推理引擎 SageLLM",
     tag: "Inference Engine",
     role: "开发工程师（Python）",
     period: "2025.10 — 至今",
-    link: "https://github.com/intellistream/SAGE",
+    link: "https://github.com/vLLM-HUST/vllm-hust",
     description: "国家科技重大专项子课题。开发适配 Ascend、MetaX 等国产芯片的大模型推理引擎。",
     highlights: [
       "开发 SageModelLoader，支持 Safetensors、GGUF 解析和 Ascend 910B 权重适配。",
@@ -170,6 +184,7 @@ const projects: Project[] = [
     role: "机器人调试工程师 · Python 开发",
     period: "2023.09 — 2024.05",
     link: "https://news.cqnews.net/1/detail/1078102377734504448/web/content_1078102377734504448.html",
+    linkLabel: "查看项目报道",
     description: "国家重点研发计划，在模拟场地下为重黎号火星车设计并开发视觉系统。",
     highlights: [
       "基于 ROS2 构建多节点数据采集框架，实现 Image、PointCloud、TF 等异构数据实时通信与融合。",
@@ -192,34 +207,44 @@ const projects: Project[] = [
     ],
     stack: ["Python", "PyQt5", "PointNet++", "Point-E"],
   },
+  {
+    title: "腾讯实习",
+    tag: "Internship",
+    role: "实习开发工程师",
+    period: "2025.07 — 2025.09",
+    link: "",
+    description: "腾讯实习经历。",
+    highlights: [
+      "实习内容待补充。",
+    ],
+    stack: ["待补充"],
+  },
 ]
 
 const researchItems: ResearchItem[] = [
   {
     year: "2026",
     title: "Neuromem: Decomposition of the Streaming Lifecycle in LLMs Memory",
-    meta: "ICML 投稿 · 排名第一",
+    meta: "ICML 26 · CCF A · 排名第一",
+    link: "https://icml.cc/virtual/2026/poster/61844",
+  },
+  {
+    year: "2026",
+    title: "SAGE: A Dataflow-Native Framework for Modular, Controllable, and Transparent LLM-Augmented Reasoning",
+    meta: "ICML 26 · CCF A · 排名第三",
+    link: "https://icml.cc/virtual/2026/poster/63809",
   },
   {
     year: "2025",
     title: "大模型推理框架 SAGE",
     meta: "NDBC 最佳系统演示奖 · 四人学生作者之一",
-  },
-  {
-    year: "2025",
-    title: "Neuromem for LLMs Memory",
-    meta: "NDBC 系统演示报告 · 排名第一",
-  },
-  {
-    year: "2025",
-    title: "LLMs Memory Operators and Data Structures",
-    meta: "ChinaStorage 系统演示报告 · 排名第一",
+    link: "https://sage.org.ai/",
   },
   {
     year: "2025",
     title: "Benchmarking In-Memory Continuous ANNS",
     meta: "SIGMOD 2026 · CCF A · 排名第三",
-    link: "https://github.com/CGCL-codes/CANDOR-Bench",
+    link: "https://dl.acm.org/doi/10.1145/3786630",
   },
   {
     year: "2024",
@@ -231,6 +256,7 @@ const researchItems: ResearchItem[] = [
     year: "2023",
     title: "多模态点云处理系统软件著作权 / 点云配准方法专利",
     meta: "软著排名第一 · 专利排名第三",
+    link: "https://patentimages.storage.googleapis.com/b5/ed/b7/60aa3f198da2bd/CN117095033B.pdf",
   },
 ]
 
@@ -248,7 +274,7 @@ const honors = [
 
 const capabilities = [
   "Python / C++ / PyBind11 / CMake",
-  "LLM Memory / Agent / RAG Workflow",
+  "Agent Memory / Agent / RAG Workflow",
   "大模型推理引擎 / 异构 AI 芯片适配",
   "CLI 工具链 / CI/CD / 跨仓库依赖管理",
   "ROS2 / 3D Vision / Point Cloud Processing",
@@ -433,7 +459,7 @@ function App() {
 
         <div className="grid gap-5 lg:grid-cols-2">
           {projects.map((project, index) => (
-            <article key={project.title} className="group glass-panel relative overflow-hidden rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-xl shadow-slate-950/5 transition-all duration-300 hover:border-blue-300 hover:shadow-2xl hover:shadow-blue-600/10 dark:border-white/10 dark:bg-white/5 dark:hover:border-blue-300/50" style={{ animationDelay: `${index * 100}ms` }}>
+            <article key={project.title} className="group glass-panel relative flex flex-col overflow-hidden rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-xl shadow-slate-950/5 transition-all duration-300 hover:border-blue-300 hover:shadow-2xl hover:shadow-blue-600/10 dark:border-white/10 dark:bg-white/5 dark:hover:border-blue-300/50" style={{ animationDelay: `${index * 100}ms` }}>
               <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-600 via-cyan-400 to-slate-950 opacity-80 dark:to-white" />
               <div className="flex items-center justify-between gap-4">
                 <Badge variant="outline" className="rounded-full border-slate-200 bg-white/70 text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300">{project.tag}</Badge>
@@ -460,10 +486,14 @@ function App() {
                   </span>
                 ))}
               </div>
-              <a href={project.link} target="_blank" rel="noreferrer" className="mt-6 inline-flex items-center gap-2 rounded-full text-sm font-black text-blue-600 transition-colors duration-200 hover:text-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-blue-300">
-                查看项目链接
-                <ExternalLink className="size-4" aria-hidden="true" />
-              </a>
+              {project.link ? (
+                <a href={project.link} target="_blank" rel="noreferrer" className="mt-auto pt-6 inline-flex items-center gap-2 rounded-full text-sm font-black text-blue-600 transition-colors duration-200 hover:text-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-blue-300">
+                  {project.linkLabel || "查看项目链接"}
+                  <ExternalLink className="size-4" aria-hidden="true" />
+                </a>
+              ) : (
+                <div className="mt-auto pt-6" />
+              )}
             </article>
           ))}
         </div>
@@ -505,7 +535,9 @@ function App() {
             <p className="section-label">Research</p>
             <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-slate-950 dark:text-white sm:text-5xl">科研经历与成果</h2>
             <p className="mt-5 text-base leading-7 text-slate-600 dark:text-slate-300">
-              科研指导老师：张书豪、刘海坤。成果覆盖大模型记忆、向量检索、点云检索、系统演示、软著与专利。
+              科研指导老师：张书豪、刘海坤、徐宗懿。
+              <br />
+              成果覆盖：记忆智能体、智能体推理框架、流式向量检索、点云检索与配准。
             </p>
           </div>
 

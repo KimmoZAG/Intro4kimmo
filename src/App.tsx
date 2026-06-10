@@ -257,8 +257,8 @@ const capabilities = [
 
 const stats = [
   { value: "5", label: "核心项目" },
-  { value: "3.72", label: "硕士 GPA" },
-  { value: "SIGMOD", label: "CCF A 成果" },
+  { value: "3篇", label: "CCF A 成果" },
+  { value: "2项", label: "软著与专利" },
 ]
 
 function getInitialDarkMode() {

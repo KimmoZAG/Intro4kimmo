@@ -73,7 +73,7 @@ const navItems = [
 const profile = {
   name: "张睿诚",
   englishName: "Kimmo Zhang",
-  headline: "华中科技大学计算机硕士\nAgent Memory / AI Infra / 复合型推理系统",
+  headline: "华中科技大学计算机硕士\nAgent Memory / AI Infra / AI 系统",
   role: "服务计算技术与系统教育部重点实验室\n金海-廖小飞系统组",
   location: "Wuhan, China\n2027.06 硕士毕业（预计）",
   email: "kimmozrc@qq.com",

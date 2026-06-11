@@ -232,7 +232,7 @@ const researchItems: ResearchItem[] = [
   },
   {
     year: "2025",
-    title: "Benchmarking In-Memory Continuous ANNS",
+    title: "CANDOR-Bench: Benchmarking In-Memory Continuous ANNS under Dynamic Open-World Streams",
     meta: "SIGMOD 2026 · CCF A · 排名第三",
     link: "https://dl.acm.org/doi/10.1145/3786630",
   },

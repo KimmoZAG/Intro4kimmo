@@ -634,10 +634,12 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       className="tilt-card group glass-panel relative flex flex-col overflow-hidden rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-xl shadow-slate-950/5 hover:border-blue-300 hover:shadow-2xl hover:shadow-blue-600/15 dark:border-white/10 dark:bg-white/5 dark:hover:border-blue-300/50"
     >
       <div className="tilt-inner flex flex-1 flex-col">
-        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-600 via-cyan-400 to-slate-950 opacity-80 dark:to-white" />
+        <div className="absolute inset-x-5 top-0 h-1 rounded-b-full bg-gradient-to-r from-blue-600 via-cyan-400 to-slate-950 opacity-80 dark:to-white" />
         <div className="flex items-center justify-between gap-4">
           <Badge variant="outline" className="rounded-full border-slate-200 bg-white/70 text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300">{project.tag}</Badge>
-          <Layers3 className="size-5 text-blue-600 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 dark:text-blue-300" aria-hidden="true" />
+          <span className="flex size-9 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-colors duration-300 group-hover:bg-blue-600 group-hover:text-white dark:bg-blue-400/10 dark:text-blue-300 dark:group-hover:bg-blue-500 dark:group-hover:text-white">
+            <Layers3 className="size-4 transition-transform duration-300 group-hover:rotate-6" aria-hidden="true" />
+          </span>
         </div>
         <h3 className="mt-6 text-2xl font-black tracking-[-0.04em] text-slate-950 dark:text-white">{project.title}</h3>
         <div className="mt-3 grid gap-2 text-xs font-bold text-slate-500 sm:grid-cols-[auto_1fr] dark:text-slate-400">

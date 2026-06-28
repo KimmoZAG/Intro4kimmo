@@ -78,7 +78,6 @@ const profile = {
   englishName: "Kimmo Zhang",
   headline: "华中科技大学计算机硕士\nAgent Memory / AI Infra / AI 系统",
   role: "服务计算技术与系统教育部重点实验室\n金海-廖小飞系统组",
-  location: "Wuhan, China\n2027.06 硕士毕业",
   email: "kimmozrc@qq.com",
   github: "https://github.com/KimmoZAG",
   repo: "https://github.com/KimmoZAG/Intro4kimmo",
@@ -817,15 +816,13 @@ function App() {
                 <p className="mt-3 text-base font-black leading-6 text-slate-950 dark:text-white">构建可靠的大模型系统</p>
                 <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">从记忆评测、推理编排到Agent搭建，关注KV Cache、系统抽象与可复现评测。</p>
               </div>
-              <div className="grid gap-3">
-                <div className="rounded-[1.5rem] bg-slate-950 p-4 text-white shadow-xl shadow-slate-950/15 dark:bg-white dark:text-slate-950">
-                  <Cpu className="mb-3 size-5" aria-hidden="true" />
-                  <p className="text-sm font-black leading-5">Python / C++ / JAVA<br />Vibe coding / Skill / Agent</p>
+              <div className="rounded-[1.75rem] bg-slate-950 p-5 text-white shadow-xl shadow-slate-950/15 dark:bg-white dark:text-slate-950">
+                <div className="flex items-center gap-3 text-sm font-black text-blue-300 dark:text-blue-600">
+                  <Cpu className="size-4" aria-hidden="true" />
+                  Tech Stack
                 </div>
-                <a href={profile.github} target="_blank" rel="noreferrer" className="rounded-[1.5rem] border border-slate-200 bg-white/75 p-4 text-slate-950 transition-colors duration-200 hover:border-blue-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:border-blue-300/50">
-                  <Github className="mb-3 size-5 text-blue-600 dark:text-blue-300" aria-hidden="true" />
-                  <p className="text-sm font-black leading-5">GitHub<br />KimmoZAG</p>
-                </a>
+                <p className="mt-3 text-sm font-black leading-6">Python / C++ / JAVA</p>
+                <p className="mt-1 text-sm leading-6 text-slate-300 dark:text-slate-600">Vibe coding · Skill · Agent</p>
               </div>
             </div>
           </div>
@@ -834,7 +831,7 @@ function App() {
             <div className="orbit-ring" aria-hidden="true" />
             <Card className="hero-portrait relative overflow-hidden border-white/60 bg-white/85 p-0 shadow-2xl shadow-blue-950/10 backdrop-blur-2xl dark:border-white/10 dark:bg-slate-950/70 dark:shadow-blue-950/30">
               <div className="relative m-4 overflow-hidden rounded-[2rem] bg-slate-100 dark:bg-slate-900 sm:m-5">
-                <img src={profile.photo} alt="张睿诚个人照片" className="h-[340px] w-full object-cover object-center sm:h-[380px]" loading="lazy" />
+                <img src={profile.photo} alt="张睿诚个人照片" className="h-[340px] w-full object-cover object-center sm:h-[380px]" fetchPriority="high" decoding="async" />
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-slate-950/75 via-slate-950/25 to-transparent" />
                 <div className="absolute bottom-5 left-5 right-5 text-white">
                   <p className="text-xs font-black uppercase tracking-[0.28em] text-blue-200">Profile</p>
@@ -853,15 +850,21 @@ function App() {
                   <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-300"><LineBreakText text={profile.role} /></p>
                 </div>
 
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  <div className="rounded-3xl border border-slate-200 bg-white/70 p-4 dark:border-white/10 dark:bg-white/5">
-                    <MapPin className="mb-3 size-5 text-blue-600 dark:text-blue-300" aria-hidden="true" />
-                    <p className="text-sm font-semibold text-slate-600 dark:text-slate-300"><LineBreakText text={profile.location} /></p>
+                <div className="rounded-3xl border border-slate-200 bg-white/70 p-5 dark:border-white/10 dark:bg-white/5">
+                  <div className="flex items-center gap-3 text-sm font-bold text-slate-500 dark:text-slate-400">
+                    <BookOpen className="size-4" aria-hidden="true" />
+                    教育背景
                   </div>
-                  <a href={profile.github} target="_blank" rel="noreferrer" className="rounded-3xl border border-slate-200 bg-white/70 p-4 transition-colors duration-200 hover:border-blue-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:border-white/10 dark:bg-white/5 dark:hover:border-blue-300/50">
-                    <Github className="mb-3 size-5 text-blue-600 dark:text-blue-300" aria-hidden="true" />
-                    <p className="text-sm font-semibold text-slate-600 dark:text-slate-300">GitHub / KimmoZAG</p>
-                  </a>
+                  <div className="mt-3 space-y-2.5">
+                    <div className="flex items-baseline justify-between gap-3">
+                      <span className="text-sm font-black text-slate-950 dark:text-white">华中科技大学 · 硕士</span>
+                      <span className="text-xs font-bold text-blue-600 dark:text-blue-300">2024 — 2027</span>
+                    </div>
+                    <div className="flex items-baseline justify-between gap-3">
+                      <span className="text-sm font-bold text-slate-600 dark:text-slate-300">重庆邮电大学 · 本科</span>
+                      <span className="text-xs font-bold text-slate-500 dark:text-slate-400">2020 — 2024</span>
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -869,7 +872,7 @@ function App() {
         </div>
       </section>
 
-      <section id="projects" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:px-10">
+      <section id="projects" className="relative mx-auto max-w-6xl scroll-mt-24 px-5 py-20 sm:px-8 lg:px-10">
         <div className="mb-8 flex flex-col justify-between gap-5 md:flex-row md:items-end" data-reveal>
           <div>
             <p className="section-label">Projects</p>
@@ -909,7 +912,7 @@ function App() {
 
       <div className="section-divider" aria-hidden="true" />
 
-      <section id="education" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:px-10">
+      <section id="education" className="relative mx-auto max-w-6xl scroll-mt-24 px-5 py-20 sm:px-8 lg:px-10">
         <div className="mb-10" data-reveal>
           <p className="section-label">Education</p>
           <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-slate-950 dark:text-white sm:text-5xl">教育经历</h2>
@@ -941,7 +944,7 @@ function App() {
 
       <div className="section-divider" aria-hidden="true" />
 
-      <section id="research" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:px-10">
+      <section id="research" className="relative mx-auto max-w-6xl scroll-mt-24 px-5 py-20 sm:px-8 lg:px-10">
         <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
           <div data-reveal>
             <p className="section-label">Research</p>
@@ -978,7 +981,7 @@ function App() {
 
       <div className="section-divider" aria-hidden="true" />
 
-      <section id="strengths" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:px-10">
+      <section id="strengths" className="relative mx-auto max-w-6xl scroll-mt-24 px-5 py-20 sm:px-8 lg:px-10">
         <div className="mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end" data-reveal>
           <div>
             <p className="section-label">Strengths</p>
@@ -1006,7 +1009,7 @@ function App() {
 
       <div className="section-divider" aria-hidden="true" />
 
-      <section id="honors" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:px-10">
+      <section id="honors" className="relative mx-auto max-w-6xl scroll-mt-24 px-5 py-20 sm:px-8 lg:px-10">
         <div className="mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end" data-reveal>
           <div>
             <p className="section-label">Honors & Skills</p>
@@ -1061,7 +1064,7 @@ function App() {
         </div>
       </section>
 
-      <section id="contact" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:px-10">
+      <section id="contact" className="relative mx-auto max-w-6xl scroll-mt-24 px-5 py-20 sm:px-8 lg:px-10">
         <div data-reveal className="overflow-hidden rounded-[2.25rem] border border-blue-500/30 bg-blue-600 p-8 text-white shadow-2xl shadow-blue-600/25 dark:border-blue-400/20 dark:bg-blue-700 sm:p-10 lg:p-12">
           <div className="floating-orbs opacity-60" aria-hidden="true">
             <span />

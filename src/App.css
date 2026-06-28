@@ -141,6 +141,237 @@
   }
 }
 
+/* ---------- Scroll progress bar ---------- */
+.scroll-progress {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 60;
+  height: 3px;
+  width: 100%;
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, #2563eb, #06b6d4 55%, #a855f7);
+  box-shadow: 0 0 18px rgba(37, 99, 235, 0.55);
+}
+
+/* ---------- Cursor spotlight ---------- */
+.cursor-glow {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  height: 460px;
+  width: 460px;
+  border-radius: 999px;
+  pointer-events: none;
+  transform: translate3d(var(--glow-x, -50%), var(--glow-y, -50%), 0) translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.16), rgba(6, 182, 212, 0.08) 42%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  will-change: transform;
+}
+
+.cursor-glow.is-active {
+  opacity: 1;
+}
+
+.dark .cursor-glow {
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.28), rgba(34, 211, 238, 0.12) 42%, transparent 70%);
+}
+
+@media (hover: none) {
+  .cursor-glow {
+    display: none;
+  }
+}
+
+/* ---------- Scroll reveal ---------- */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(34px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- Nav active pill ---------- */
+.nav-link {
+  position: relative;
+}
+
+.nav-link.is-active {
+  color: #2563eb;
+}
+
+.dark .nav-link.is-active {
+  color: #93c5fd;
+}
+
+.nav-link.is-active::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0.25rem;
+  height: 3px;
+  width: 18px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: currentColor;
+}
+
+/* ---------- 3D tilt cards ---------- */
+.tilt-card {
+  transform: perspective(1100px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateZ(0);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.3s ease;
+  transform-style: preserve-3d;
+}
+
+.tilt-card .tilt-inner {
+  transform: translateZ(36px);
+  transform-style: preserve-3d;
+}
+
+/* spotlight that tracks pointer within a card */
+.tilt-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(
+    340px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(37, 99, 235, 0.14),
+    transparent 60%
+  );
+}
+
+.tilt-card:hover::after {
+  opacity: 1;
+}
+
+.dark .tilt-card::after {
+  background: radial-gradient(
+    340px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(96, 165, 250, 0.18),
+    transparent 60%
+  );
+}
+
+/* ---------- Animated gradient text accent ---------- */
+.text-gradient {
+  background-size: 220% 220%;
+  animation: gradient-pan 8s ease infinite;
+}
+
+@keyframes gradient-pan {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* ---------- Floating orbs in hero ---------- */
+.floating-orbs {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.floating-orbs span {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(28px);
+  opacity: 0.55;
+  animation: orb-float 14s ease-in-out infinite;
+}
+
+.floating-orbs span:nth-child(1) {
+  top: 8%;
+  left: 6%;
+  height: 220px;
+  width: 220px;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.5), transparent 68%);
+  animation-delay: 0s;
+}
+
+.floating-orbs span:nth-child(2) {
+  top: 52%;
+  right: 8%;
+  height: 280px;
+  width: 280px;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.42), transparent 68%);
+  animation-delay: -4s;
+}
+
+.floating-orbs span:nth-child(3) {
+  bottom: 6%;
+  left: 38%;
+  height: 200px;
+  width: 200px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.34), transparent 68%);
+  animation-delay: -8s;
+}
+
+@keyframes orb-float {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  33% {
+    transform: translate3d(26px, -32px, 0) scale(1.08);
+  }
+  66% {
+    transform: translate3d(-22px, 22px, 0) scale(0.94);
+  }
+}
+
+/* ---------- Stat count chips lift ---------- */
+.stat-chip {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+}
+
+.stat-chip:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px -18px rgba(37, 99, 235, 0.5);
+}
+
+/* ---------- Timeline dot pulse ---------- */
+.timeline-dot {
+  position: relative;
+}
+
+.timeline-dot::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 999px;
+  border: 2px solid rgba(37, 99, 235, 0.4);
+  animation: dot-pulse 2.4s ease-out infinite;
+}
+
+@keyframes dot-pulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -149,5 +380,14 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .tilt-card {
+    transform: none;
   }
 }

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import {
   ArrowUpRight,
   Award,
@@ -110,7 +110,7 @@ const education: Education[] = [
     degree: "硕士 · 计算机科学与技术",
     college: "计算机科学与技术学院\n计算机07班",
     lab: "服务计算技术与系统教育部重点实验室\n金海-廖小飞系统组",
-    period: "2024.09 — 2027.06（预计）",
+    period: "2024.09 — 2027.06",
     gpa: "GPA 3.72 / 4.0",
   },
   {
@@ -129,56 +129,76 @@ const projects: Project[] = [
     tag: "Agent Memory",
     role: "项目研发负责人（Python）",
     period: "2025.06 — 2026.01",
-    link: "https://github.com/intellistream/neuromem-bench",
-    description: "华为盘古合作项目。面向大模型记忆能力，构建流式评测基准和多级内存智能体。",
+    link: "https://github.com/intellistream/neuromem",
+    extraLabel: "华为合作 · ICML 26",
+    description: "华为合作项目。构建首个面向大模型记忆能力的流式评测基准，并研发支持动态读写的多级内存智能体。",
     highlights: [
-      "提出索引与存储解耦的记忆管理架构，降低记忆表单构建复杂度。",
-      "构建流式记忆评测 Pipeline，复现 MemoryBank、MemGPT、Mem0 等系统。",
-      "组合多级记忆结构并优化处理路径，探索效率与准确度最优的记忆体。",
+      "设计可组合记忆管理框架，解耦记忆索引与存储，解决高度耦合难编程问题，大幅简化记忆构建流程。",
+      "构建流式记忆评测 Benchmark，支持 Locomo、LongMemEval 在流式下的标准化评测，组合 MemoryBank、MemGPT、Mem0 等主流语义算子与数据结构。",
+      "通过多层记忆数据结构优化语义处理策略，分别得到执行效率与准确度最优的记忆体。",
     ],
-    stack: ["Python", "Agent Memory", "Benchmark", "Agent"],
+    stack: ["Python", "Agent Memory", "Benchmark", "ICML 26"],
   },
   {
     title: "复合型 AI 推理编排框架 Sage",
     tag: "AI Workflow",
-    role: "编排与中间件开发工程师 · Python/C++ 混合开发",
+    role: "开发工程师 · Python/C++ 混合开发",
     period: "2024.10 — 至今",
     link: "https://github.com/intellistream/SAGE",
-    description: "B 类国家自然科学基金项目，开发用于科学探索的分布式复合型大模型应用开发框架。",
+    extraLabel: "国自然 B 类 · ICML 26",
+    description: "B 类国家自然科学基金项目。开发用于 24 小时不间断科学探索多智能体的分布式复合型智能体框架。",
     highlights: [
-      "设计类 Flink 流式数据流编排 API，支持灵活组装 RAG、Agent 等 Workflow，平均减少约 60% 编排时代码量。",
-      "动态解析 DAG 并实例化物理算子，引入有界队列通信机制，缓解高负载任务积压导致的系统假死。",
-      "基于 PyBind11 封装 C++ 内核，设计 Service 接入规范，支撑 4 项科研项目快速落地。",
+      "设计 DataStream 编排 API，支持灵活组装 RAG、Self-LOOP 等多种智能体，相较 LangGraph 平均减少约 60% 编排代码量。",
+      "动态解析用户定义 DAG 拓扑并实例化物理算子，注入有界队列缓存通信机制，确保高负载下的服务稳定性。",
+      "基于 PyBind11 将多个 C++ 项目封装为 Python 模块，统一 CMake 依赖消除编译冲突，设计中间件接入规范，支撑 4 项科研项目快速落地。",
+      "推动工程规范化：建立分层架构依赖约束，通过 pre-commit hook 强制单向依赖，统一 toml 依赖管理，规范 15 人团队提交流程。",
     ],
     stack: ["Python", "C++", "PyBind11", "DAG", "RAG"],
   },
   {
-    title: "LMcache",
+    title: "KV Cache 管理系统 LMCache",
     tag: "KV Cache",
     role: "开发工程师（Python）",
-    period: "2025.06 — 至今",
+    period: "2026.05 — 2026.08",
     link: "https://github.com/LMCache/LMCache",
     extraLabel: "腾讯实习",
-    description: "大模型推理 KV Cache 缓存优化。",
+    description: "腾讯实习。为大模型推理引擎设计的 KV Cache 管理系统，主攻可观测性与容量规划。",
     highlights: [
-      "KV Cache 缓存优化。",
-      "推理时延降低。",
+      "设计事件驱动的 MP 可观测性管线，含 40+ 事件类型的统一 EventBus 调度与无锁异步发布，实现 L1/L2/CacheBlend 全链路指标覆盖与订阅者异常隔离。",
+      "设计 chunk hash 请求级日志记录器与 token 级全局命中率指标，支撑按模型/租户分片的实时监控与离线 trace replay。",
+      "设计 LRU 缓存模拟器，重放线上日志计算不同容量下的命中率曲线，推动录制-重放-分析的容量规划闭环。",
     ],
-    stack: ["Python", "KV Cache", "Inference"],
+    stack: ["Python", "KV Cache", "EventBus", "Observability"],
   },
   {
-    title: "面向国产芯片的大模型推理引擎 SageLLM",
+    title: "面向国产芯片的大模型推理引擎 vLLM-HUST",
     tag: "Inference Engine",
     role: "开发工程师（Python）",
     period: "2025.10 — 至今",
     link: "https://github.com/vLLM-HUST/vllm-hust",
-    description: "国家科技重大专项子课题。开发适配 Ascend、MetaX 等国产芯片的大模型推理引擎。",
+    extraLabel: "国家科技重大专项",
+    description: "国家科技重大专项子课题。开发支撑 AI4SCI 与华为 Ascend 的大模型推理引擎。",
     highlights: [
-      "开发 SageModelLoader，支持 Safetensors、GGUF 解析和 Ascend 910B 权重适配。",
-      "研发异构芯片 CLI 工具，集成 PyPI 发布与环境预检，冷启动延迟降低 70%。",
-      "搭建 CI/CD 测试流水线，支撑 13 个核心仓库与 20 人团队协作。",
+      "开发高性能统一加载架构 ModelLoader，支持 Safetensors、GGUF 等异构格式解析；通过零拷贝读取与内存映射适配 Ascend 910B 权重布局，最高降低 TTFT 延迟 14%。",
+      "研发面向异构芯片的 CLI 运维工具，集成 PyPI 自动化发布与环境预检；通过软硬件栈原子化探测与状态缓存，将冷启动延迟降低 70%，并统一多子模块跨仓库依赖管理。",
+      "搭建自动化 CI/CD 测试流水线，支持 13 个核心仓库的并行开发与回归测试，支撑 20+ 人团队高效协同。",
     ],
     stack: ["Python", "Ascend", "Safetensors", "CI/CD", "CLI"],
+  },
+  {
+    title: "基于 Hadoop-HDFS 的主动预热系统",
+    tag: "Distributed Storage",
+    role: "代码开发、调试工程师（JAVA）",
+    period: "2024.09 — 2024.11",
+    link: "",
+    extraLabel: "校企合作",
+    description: "校企合作项目。为 HDFS 开发 HDD-SSD 主动预热系统。",
+    highlights: [
+      "设计主动预热 Pipeline，包含缓存元数据管理与预热进度追踪，可在指定流量下进行分区级别的预热。",
+      "设计多粒度缓存重试机制，预防 DN 间读写平衡导致的 block 迁移及动态分区带来的预热失败，确保目标分区缓存完整度。",
+      "设计客户端跟踪日志与数据透视面板，推动开发-DEBUG 闭环。",
+    ],
+    stack: ["JAVA", "Hadoop", "HDFS", "Cache"],
   },
   {
     title: "重黎号火星车视觉系统开发与设计",
@@ -232,6 +252,11 @@ const researchItems: ResearchItem[] = [
   },
   {
     year: "2025",
+    title: "LLMs Memory Operators and Data Structures",
+    meta: "ChinaStorage 系统演示报告 · 排名第一",
+  },
+  {
+    year: "2025",
     title: "CANDOR-Bench: Benchmarking In-Memory Continuous ANNS under Dynamic Open-World Streams",
     meta: "SIGMOD 2026 · CCF A · 排名第三",
     link: "https://dl.acm.org/doi/10.1145/3786630",
@@ -272,7 +297,7 @@ const capabilities = [
 ]
 
 const stats = [
-  { value: "5", label: "核心项目" },
+  { value: "7", label: "核心项目" },
   { value: "3篇", label: "CCF A 成果" },
   { value: "2项", label: "软著与专利" },
 ]
@@ -301,6 +326,233 @@ function LineBreakText({ text }: { text: string }) {
   ))
 }
 
+const sectionIds = navItems.map((item) => item.href.replace("#", ""))
+
+// Reveal-on-scroll: adds .is-visible to any [data-reveal] element when it enters the viewport.
+function useScrollReveal() {
+  useEffect(() => {
+    const elements = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"))
+    if (elements.length === 0) {
+      return
+    }
+
+    if (!("IntersectionObserver" in window)) {
+      elements.forEach((el) => el.classList.add("is-visible"))
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible")
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
+    )
+
+    elements.forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
+}
+
+// Tracks scroll progress (0-1) for the top progress bar.
+function useScrollProgress() {
+  const [progress, setProgress] = useState(0)
+
+  useEffect(() => {
+    let frame = 0
+    const update = () => {
+      frame = 0
+      const scrollTop = window.scrollY
+      const height = document.documentElement.scrollHeight - window.innerHeight
+      setProgress(height > 0 ? Math.min(scrollTop / height, 1) : 0)
+    }
+    const onScroll = () => {
+      if (!frame) {
+        frame = window.requestAnimationFrame(update)
+      }
+    }
+    update()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    window.addEventListener("resize", onScroll)
+    return () => {
+      window.removeEventListener("scroll", onScroll)
+      window.removeEventListener("resize", onScroll)
+      if (frame) {
+        window.cancelAnimationFrame(frame)
+      }
+    }
+  }, [])
+
+  return progress
+}
+
+// Highlights the nav item for the section currently in view.
+function useActiveSection() {
+  const [active, setActive] = useState(sectionIds[0])
+
+  useEffect(() => {
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => Boolean(el))
+    if (sections.length === 0) {
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
+        if (visible) {
+          setActive(visible.target.id)
+        }
+      },
+      { rootMargin: "-45% 0px -45% 0px", threshold: [0, 0.25, 0.5, 1] },
+    )
+
+    sections.forEach((section) => observer.observe(section))
+    return () => observer.disconnect()
+  }, [])
+
+  return active
+}
+
+// Soft pointer-follow glow + per-card 3D tilt.
+function useCursorGlow() {
+  const glowRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    if (window.matchMedia("(hover: none)").matches) {
+      return
+    }
+    const glow = glowRef.current
+    let frame = 0
+    let nextX = 0
+    let nextY = 0
+
+    const apply = () => {
+      frame = 0
+      if (glow) {
+        glow.style.setProperty("--glow-x", `${nextX}px`)
+        glow.style.setProperty("--glow-y", `${nextY}px`)
+        glow.classList.add("is-active")
+      }
+    }
+
+    const onMove = (event: PointerEvent) => {
+      nextX = event.clientX
+      nextY = event.clientY
+      if (!frame) {
+        frame = window.requestAnimationFrame(apply)
+      }
+    }
+
+    window.addEventListener("pointermove", onMove, { passive: true })
+    return () => {
+      window.removeEventListener("pointermove", onMove)
+      if (frame) {
+        window.cancelAnimationFrame(frame)
+      }
+    }
+  }, [])
+
+  return glowRef
+}
+
+// Applies a subtle 3D tilt + inner spotlight as the pointer moves over a card.
+function useTilt<T extends HTMLElement>() {
+  const ref = useRef<T | null>(null)
+
+  const onPointerMove = useCallback((event: React.PointerEvent<T>) => {
+    const el = ref.current
+    if (!el || window.matchMedia("(hover: none)").matches) {
+      return
+    }
+    const rect = el.getBoundingClientRect()
+    const px = (event.clientX - rect.left) / rect.width
+    const py = (event.clientY - rect.top) / rect.height
+    const max = 6
+    el.style.setProperty("--tilt-y", `${(px - 0.5) * max * 2}deg`)
+    el.style.setProperty("--tilt-x", `${(0.5 - py) * max * 2}deg`)
+    el.style.setProperty("--mx", `${px * 100}%`)
+    el.style.setProperty("--my", `${py * 100}%`)
+  }, [])
+
+  const onPointerLeave = useCallback(() => {
+    const el = ref.current
+    if (!el) {
+      return
+    }
+    el.style.setProperty("--tilt-x", "0deg")
+    el.style.setProperty("--tilt-y", "0deg")
+  }, [])
+
+  return { ref, onPointerMove, onPointerLeave }
+}
+
+function ProjectCard({ project, index }: { project: Project; index: number }) {
+  const { ref, onPointerMove, onPointerLeave } = useTilt<HTMLElement>()
+
+  return (
+    <article
+      ref={ref}
+      onPointerMove={onPointerMove}
+      onPointerLeave={onPointerLeave}
+      data-reveal
+      style={{ ["--reveal-delay" as string]: `${(index % 2) * 90}ms` }}
+      className="tilt-card group glass-panel relative flex flex-col overflow-hidden rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-xl shadow-slate-950/5 hover:border-blue-300 hover:shadow-2xl hover:shadow-blue-600/15 dark:border-white/10 dark:bg-white/5 dark:hover:border-blue-300/50"
+    >
+      <div className="tilt-inner flex flex-1 flex-col">
+        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-600 via-cyan-400 to-slate-950 opacity-80 dark:to-white" />
+        <div className="flex items-center justify-between gap-4">
+          <Badge variant="outline" className="rounded-full border-slate-200 bg-white/70 text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300">{project.tag}</Badge>
+          <Layers3 className="size-5 text-blue-600 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 dark:text-blue-300" aria-hidden="true" />
+        </div>
+        <h3 className="mt-6 text-2xl font-black tracking-[-0.04em] text-slate-950 dark:text-white">{project.title}</h3>
+        <div className="mt-3 grid gap-2 text-xs font-bold text-slate-500 sm:grid-cols-[auto_1fr] dark:text-slate-400">
+          <span className="inline-flex items-center gap-1"><CalendarDays className="size-3.5" aria-hidden="true" />{project.period}</span>
+          <span className="sm:text-right">{project.role}</span>
+        </div>
+        <p className="mt-4 text-sm leading-7 text-slate-600 dark:text-slate-300">{project.description}</p>
+        <ul className="mt-5 space-y-3">
+          {project.highlights.map((highlight) => (
+            <li key={highlight} className="flex gap-3 text-sm leading-7 text-slate-600 dark:text-slate-300">
+              <span className="mt-2 size-1.5 shrink-0 rounded-full bg-blue-600 dark:bg-blue-300" />
+              <span>{highlight}</span>
+            </li>
+          ))}
+        </ul>
+        <div className="mt-6 flex flex-wrap gap-2">
+          {project.stack.map((tech) => (
+            <span key={tech} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-bold text-slate-600 transition-colors duration-200 group-hover:border-blue-200 dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
+              {tech}
+            </span>
+          ))}
+        </div>
+        <div className="mt-auto flex items-center justify-between gap-2 pt-6">
+          {project.link ? (
+            <a href={project.link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full text-sm font-black text-blue-600 transition-colors duration-200 hover:text-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-blue-300">
+              {project.linkLabel || "查看项目链接"}
+              <ExternalLink className="size-4" aria-hidden="true" />
+            </a>
+          ) : (
+            <div />
+          )}
+          {project.extraLabel && (
+            <Badge variant="outline" className="rounded-full border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-400/30 dark:bg-blue-400/10 dark:text-blue-200">
+              {project.extraLabel}
+            </Badge>
+          )}
+        </div>
+      </div>
+    </article>
+  )
+}
+
 function App() {
   const [isDark, setIsDark] = useState(getInitialDarkMode)
 
@@ -311,8 +563,15 @@ function App() {
 
   const currentYear = useMemo(() => new Date().getFullYear(), [])
 
+  const scrollProgress = useScrollProgress()
+  const activeSection = useActiveSection()
+  const glowRef = useCursorGlow()
+  useScrollReveal()
+
   return (
     <main className="app-shell min-h-screen overflow-hidden bg-[#f8fafc] text-slate-950 transition-colors duration-300 dark:bg-[#06070d] dark:text-white">
+      <div className="scroll-progress" style={{ transform: `scaleX(${scrollProgress})` }} aria-hidden="true" />
+      <div ref={glowRef} className="cursor-glow" aria-hidden="true" />
       <div className="mesh-background" aria-hidden="true" />
       <div className="pointer-events-none fixed inset-0 bg-[linear-gradient(to_right,rgba(15,23,42,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(15,23,42,0.06)_1px,transparent_1px)] bg-[size:72px_72px] opacity-40 dark:bg-[linear-gradient(to_right,rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.08)_1px,transparent_1px)]" />
 
@@ -326,11 +585,19 @@ function App() {
           </a>
 
           <div className="hidden items-center gap-1 md:flex">
-            {navItems.map((item) => (
-              <a key={item.href} href={item.href} className="rounded-full px-3 py-2 text-sm font-semibold text-slate-600 transition-colors duration-200 hover:bg-slate-900 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-slate-300 dark:hover:bg-white dark:hover:text-slate-950">
-                {item.label}
-              </a>
-            ))}
+            {navItems.map((item) => {
+              const isActive = activeSection === item.href.replace("#", "")
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  aria-current={isActive ? "true" : undefined}
+                  className={`nav-link rounded-full px-3 py-2 text-sm font-semibold transition-colors duration-200 hover:bg-slate-900 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:hover:bg-white dark:hover:text-slate-950 ${isActive ? "is-active" : "text-slate-600 dark:text-slate-300"}`}
+                >
+                  {item.label}
+                </a>
+              )
+            })}
           </div>
 
           <button type="button" onClick={() => setIsDark((value) => !value)} className="inline-flex size-10 cursor-pointer items-center justify-center rounded-full border border-slate-200 bg-white/80 text-slate-700 transition-colors duration-200 hover:border-blue-400 hover:text-blue-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:border-white/10 dark:bg-white/10 dark:text-slate-100 dark:hover:border-blue-300" aria-label="切换明暗主题">
@@ -340,6 +607,11 @@ function App() {
       </header>
 
       <section id="profile" className="relative mx-auto flex min-h-screen max-w-6xl items-center px-5 pb-20 pt-32 sm:px-8 lg:px-10">
+        <div className="floating-orbs" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+        </div>
         <div className="grid w-full items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="animate-rise">
             <Badge variant="outline" className="mb-5 rounded-full border-blue-200 bg-blue-50 px-3 py-1 text-blue-700 dark:border-blue-400/30 dark:bg-blue-400/10 dark:text-blue-200">
@@ -371,7 +643,7 @@ function App() {
 
             <div className="mt-10 grid max-w-xl grid-cols-3 gap-3">
               {stats.map((item) => (
-                <div key={item.label} className="glass-panel rounded-3xl p-4 text-center">
+                <div key={item.label} className="stat-chip glass-panel rounded-3xl p-4 text-center">
                   <div className="text-2xl font-black text-slate-950 dark:text-white">{item.value}</div>
                   <div className="mt-1 text-xs font-semibold text-slate-500 dark:text-slate-400">{item.label}</div>
                 </div>
@@ -440,7 +712,7 @@ function App() {
       </section>
 
       <section id="projects" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:px-10">
-        <div className="mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+        <div className="mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end" data-reveal>
           <div>
             <p className="section-label">Projects</p>
             <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-slate-950 dark:text-white sm:text-5xl">代表项目</h2>
@@ -449,61 +721,19 @@ function App() {
 
         <div className="grid gap-5 lg:grid-cols-2">
           {projects.map((project, index) => (
-            <article key={project.title} className="group glass-panel relative flex flex-col overflow-hidden rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-xl shadow-slate-950/5 transition-all duration-300 hover:border-blue-300 hover:shadow-2xl hover:shadow-blue-600/10 dark:border-white/10 dark:bg-white/5 dark:hover:border-blue-300/50" style={{ animationDelay: `${index * 100}ms` }}>
-              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-600 via-cyan-400 to-slate-950 opacity-80 dark:to-white" />
-              <div className="flex items-center justify-between gap-4">
-                <Badge variant="outline" className="rounded-full border-slate-200 bg-white/70 text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300">{project.tag}</Badge>
-                <Layers3 className="size-5 text-blue-600 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 dark:text-blue-300" aria-hidden="true" />
-              </div>
-              <h3 className="mt-6 text-2xl font-black tracking-[-0.04em] text-slate-950 dark:text-white">{project.title}</h3>
-              <div className="mt-3 grid gap-2 text-xs font-bold text-slate-500 sm:grid-cols-[auto_1fr] dark:text-slate-400">
-                <span className="inline-flex items-center gap-1"><CalendarDays className="size-3.5" aria-hidden="true" />{project.period}</span>
-                <span className="sm:text-right">{project.role}</span>
-              </div>
-              <p className="mt-4 text-sm leading-7 text-slate-600 dark:text-slate-300">{project.description}</p>
-              <ul className="mt-5 space-y-3">
-                {project.highlights.map((highlight) => (
-                  <li key={highlight} className="flex gap-3 text-sm leading-7 text-slate-600 dark:text-slate-300">
-                    <span className="mt-2 size-1.5 shrink-0 rounded-full bg-blue-600 dark:bg-blue-300" />
-                    <span>{highlight}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-6 flex flex-wrap gap-2">
-                {project.stack.map((tech) => (
-                  <span key={tech} className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-bold text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
-                    {tech}
-                  </span>
-                ))}
-              </div>
-              <div className="mt-auto flex items-center justify-between gap-2 pt-6">
-                {project.link ? (
-                  <a href={project.link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full text-sm font-black text-blue-600 transition-colors duration-200 hover:text-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-blue-300">
-                    {project.linkLabel || "查看项目链接"}
-                    <ExternalLink className="size-4" aria-hidden="true" />
-                  </a>
-                ) : (
-                  <div />
-                )}
-                {project.extraLabel && (
-                  <Badge variant="outline" className="rounded-full border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-400/30 dark:bg-blue-400/10 dark:text-blue-200">
-                    {project.extraLabel}
-                  </Badge>
-                )}
-              </div>
-            </article>
+            <ProjectCard key={project.title} project={project} index={index} />
           ))}
         </div>
       </section>
 
       <section id="education" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:px-10">
-        <div className="mb-10">
+        <div className="mb-10" data-reveal>
           <p className="section-label">Education</p>
           <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-slate-950 dark:text-white sm:text-5xl">教育经历</h2>
         </div>
         <div className="grid gap-5 lg:grid-cols-2">
-          {education.map((item) => (
-            <Card key={item.school} className="glass-panel border-white/70 bg-white/80 shadow-xl shadow-slate-950/5 dark:border-white/10 dark:bg-white/5">
+          {education.map((item, index) => (
+            <Card key={item.school} data-reveal style={{ ["--reveal-delay" as string]: `${index * 90}ms` }} className="glass-panel border-white/70 bg-white/80 shadow-xl shadow-slate-950/5 dark:border-white/10 dark:bg-white/5">
               <CardContent className="p-6 sm:p-7">
                 <div className="flex items-start justify-between gap-4">
                   <div>
@@ -528,7 +758,7 @@ function App() {
 
       <section id="research" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:px-10">
         <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
-          <div>
+          <div data-reveal>
             <p className="section-label">Research</p>
             <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-slate-950 dark:text-white sm:text-5xl">科研经历与成果</h2>
             <p className="mt-5 text-base leading-7 text-slate-600 dark:text-slate-300">
@@ -540,9 +770,9 @@ function App() {
 
           <div className="relative space-y-4">
             <div className="timeline-line" aria-hidden="true" />
-            {researchItems.map((item) => (
-              <div key={`${item.year}-${item.title}`} className="glass-panel relative ml-8 rounded-[1.75rem] border border-white/70 bg-white/80 p-6 shadow-lg shadow-slate-950/5 dark:border-white/10 dark:bg-white/5">
-                <div className="absolute -left-10 top-7 flex size-4 items-center justify-center rounded-full bg-blue-600 ring-8 ring-blue-100 dark:ring-blue-950" />
+            {researchItems.map((item, index) => (
+              <div key={`${item.year}-${item.title}`} data-reveal style={{ ["--reveal-delay" as string]: `${index * 70}ms` }} className="glass-panel relative ml-8 rounded-[1.75rem] border border-white/70 bg-white/80 p-6 shadow-lg shadow-slate-950/5 dark:border-white/10 dark:bg-white/5">
+                <div className="timeline-dot absolute -left-10 top-7 flex size-4 items-center justify-center rounded-full bg-blue-600 ring-8 ring-blue-100 dark:ring-blue-950" />
                 <div className="text-sm font-black text-blue-600 dark:text-blue-300">{item.year}</div>
                 <h3 className="mt-2 text-lg font-black tracking-[-0.03em] text-slate-950 dark:text-white">
                   {item.link ? (
@@ -562,7 +792,7 @@ function App() {
       </section>
 
       <section id="strengths" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:px-10">
-        <div className="mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+        <div className="mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end" data-reveal>
           <div>
             <p className="section-label">Strengths</p>
             <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-slate-950 dark:text-white sm:text-5xl">从系统研发到科研产出</h2>
@@ -573,7 +803,7 @@ function App() {
           {features.map((feature, index) => {
             const Icon = feature.icon
             return (
-              <Card key={feature.title} className="glass-panel animate-rise border-white/70 bg-white/80 shadow-xl shadow-slate-950/5 transition-all duration-300 hover:border-blue-200 hover:shadow-blue-600/10 dark:border-white/10 dark:bg-white/5 dark:hover:border-blue-300/40" style={{ animationDelay: `${index * 120}ms` }}>
+              <Card key={feature.title} data-reveal style={{ ["--reveal-delay" as string]: `${index * 120}ms` }} className="tilt-card relative overflow-hidden glass-panel border-white/70 bg-white/80 shadow-xl shadow-slate-950/5 hover:border-blue-200 hover:shadow-blue-600/10 dark:border-white/10 dark:bg-white/5 dark:hover:border-blue-300/40">
                 <CardContent className="p-6">
                   <div className="mb-6 flex size-12 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-lg shadow-blue-600/25">
                     <Icon className="size-5" aria-hidden="true" />
@@ -588,7 +818,7 @@ function App() {
       </section>
 
       <section id="honors" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:px-10">
-        <div className="mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+        <div className="mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end" data-reveal>
           <div>
             <p className="section-label">Honors & Skills</p>
             <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-slate-950 dark:text-white sm:text-5xl">荣誉与专业能力</h2>
@@ -596,7 +826,7 @@ function App() {
         </div>
 
         <div className="grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">
-          <Card className="glass-panel border-white/70 bg-white/80 shadow-xl shadow-slate-950/5 dark:border-white/10 dark:bg-white/5">
+          <Card data-reveal className="glass-panel border-white/70 bg-white/80 shadow-xl shadow-slate-950/5 dark:border-white/10 dark:bg-white/5">
             <CardContent className="p-6 sm:p-7">
               <div className="mb-6 flex items-center gap-3">
                 <Trophy className="size-6 text-blue-600 dark:text-blue-300" aria-hidden="true" />
@@ -604,7 +834,7 @@ function App() {
               </div>
               <div className="grid gap-3">
                 {honors.map((honor) => (
-                  <div key={honor} className="rounded-2xl border border-slate-200 bg-white/70 px-4 py-3 text-sm font-semibold leading-6 text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
+                  <div key={honor} className="rounded-2xl border border-slate-200 bg-white/70 px-4 py-3 text-sm font-semibold leading-6 text-slate-600 transition-colors duration-200 hover:border-blue-300 hover:bg-blue-50/60 dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:border-blue-300/40 dark:hover:bg-blue-400/5">
                     {honor}
                   </div>
                 ))}
@@ -612,7 +842,7 @@ function App() {
             </CardContent>
           </Card>
 
-          <Card className="glass-panel border-white/70 bg-white/80 shadow-xl shadow-slate-950/5 dark:border-white/10 dark:bg-white/5">
+          <Card data-reveal style={{ ["--reveal-delay" as string]: "100ms" }} className="glass-panel border-white/70 bg-white/80 shadow-xl shadow-slate-950/5 dark:border-white/10 dark:bg-white/5">
             <CardContent className="p-6 sm:p-7">
               <div className="mb-6 flex items-center gap-3">
                 <Cpu className="size-6 text-blue-600 dark:text-blue-300" aria-hidden="true" />
@@ -620,7 +850,7 @@ function App() {
               </div>
               <div className="flex flex-wrap gap-2">
                 {capabilities.map((skill) => (
-                  <span key={skill} className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-bold text-slate-700 dark:border-white/10 dark:bg-white/5 dark:text-slate-200">
+                  <span key={skill} className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-bold text-slate-700 transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 dark:border-white/10 dark:bg-white/5 dark:text-slate-200 dark:hover:border-blue-300/40 dark:hover:bg-blue-400/10 dark:hover:text-blue-200">
                     {skill}
                   </span>
                 ))}
@@ -643,7 +873,12 @@ function App() {
       </section>
 
       <section id="contact" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:px-10">
-        <div className="overflow-hidden rounded-[2.25rem] border border-blue-500/30 bg-blue-600 p-8 text-white shadow-2xl shadow-blue-600/25 dark:border-blue-400/20 dark:bg-blue-700 sm:p-10 lg:p-12">
+        <div data-reveal className="overflow-hidden rounded-[2.25rem] border border-blue-500/30 bg-blue-600 p-8 text-white shadow-2xl shadow-blue-600/25 dark:border-blue-400/20 dark:bg-blue-700 sm:p-10 lg:p-12">
+          <div className="floating-orbs opacity-60" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </div>
           <div className="relative z-10 grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
             <div>
               <p className="font-hand text-3xl text-blue-100">Let's build reliable AI systems</p>

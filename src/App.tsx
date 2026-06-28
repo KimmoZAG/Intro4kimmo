@@ -816,13 +816,13 @@ function App() {
                 <p className="mt-3 text-base font-black leading-6 text-slate-950 dark:text-white">构建可靠的大模型系统</p>
                 <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">从记忆评测、推理编排到Agent搭建，关注KV Cache、系统抽象与可复现评测。</p>
               </div>
-              <div className="rounded-[1.75rem] bg-slate-950 p-5 text-white shadow-xl shadow-slate-950/15 dark:bg-white dark:text-slate-950">
-                <div className="flex items-center gap-3 text-sm font-black text-blue-300 dark:text-blue-600">
+              <div className="glass-panel rounded-[1.75rem] p-5 shadow-xl shadow-slate-950/5 dark:shadow-black/20">
+                <div className="flex items-center gap-3 text-sm font-black text-blue-600 dark:text-blue-300">
                   <Cpu className="size-4" aria-hidden="true" />
                   Tech Stack
                 </div>
-                <p className="mt-3 text-sm font-black leading-6">Python / C++ / JAVA</p>
-                <p className="mt-1 text-sm leading-6 text-slate-300 dark:text-slate-600">Vibe coding · Skill · Agent</p>
+                <p className="mt-3 text-base font-black leading-6 text-slate-950 dark:text-white">Python / C++ / JAVA</p>
+                <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">Vibe coding · Skill · Agent</p>
               </div>
             </div>
           </div>

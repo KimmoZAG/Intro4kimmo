@@ -5,6 +5,7 @@ import {
   BookOpen,
   Briefcase,
   CalendarDays,
+  ChevronUp,
   Code2,
   Cpu,
   Database,
@@ -14,6 +15,7 @@ import {
   Mail,
   MapPin,
   Moon,
+  Phone,
   Send,
   Sparkles,
   Sun,
@@ -79,12 +81,22 @@ const profile = {
   role: "服务计算技术与系统教育部重点实验室\n金海-廖小飞系统组",
   location: "Wuhan, China\n2027.06 硕士毕业",
   email: "kimmozrc@qq.com",
+  phone: "133-4618-8054",
   github: "https://github.com/KimmoZAG",
   repo: "https://github.com/KimmoZAG/Intro4kimmo",
   photo: `${import.meta.env.BASE_URL}profile-photo.png`,
   summary:
     "我关注智能体记忆、大模型KV缓存、推理编排与效能。参与国家科技重大专项子课题、国家自然科学基金项目和华为合作项目，负责从系统设计到工程落地的全栈研发工作。",
 }
+
+// Rotating role keywords shown under the name with a typing effect.
+const rotatingRoles = [
+  "Agent Memory 记忆智能体",
+  "AI Infra 推理系统",
+  "KV Cache 缓存优化",
+  "Dataflow 编排框架",
+  "国产芯片推理引擎",
+]
 
 const features: Feature[] = [
   {
@@ -231,6 +243,14 @@ const projects: Project[] = [
   },
 ]
 
+// Project filter buckets — each maps to one or more project tags.
+const projectFilters: { id: string; label: string; tags: string[] }[] = [
+  { id: "all", label: "全部", tags: [] },
+  { id: "llm", label: "LLM 系统", tags: ["Agent Memory", "AI Workflow", "KV Cache", "Inference Engine"] },
+  { id: "storage", label: "系统与存储", tags: ["Distributed Storage"] },
+  { id: "vision", label: "视觉与机器人", tags: ["Robotics Vision", "3D Vision"] },
+]
+
 const researchItems: ResearchItem[] = [
   {
     year: "2026",
@@ -297,9 +317,9 @@ const capabilities = [
 ]
 
 const stats = [
-  { value: "7", label: "核心项目" },
-  { value: "3篇", label: "CCF A 成果" },
-  { value: "2项", label: "软著与专利" },
+  { value: 7, suffix: "", label: "核心项目" },
+  { value: 3, suffix: "篇", label: "CCF A 成果" },
+  { value: 2, suffix: "项", label: "软著与专利" },
 ]
 
 function getInitialDarkMode() {
@@ -327,6 +347,105 @@ function LineBreakText({ text }: { text: string }) {
 }
 
 const sectionIds = navItems.map((item) => item.href.replace("#", ""))
+
+function prefersReducedMotion() {
+  return typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
+}
+
+// Typing/deleting carousel over a list of phrases.
+function useTypingRotator(phrases: string[], { typeSpeed = 90, deleteSpeed = 45, hold = 1500 } = {}) {
+  const reduced = prefersReducedMotion()
+  const [text, setText] = useState(() => (reduced ? (phrases[0] ?? "") : ""))
+  const [index, setIndex] = useState(0)
+  const [phase, setPhase] = useState<"typing" | "holding" | "deleting">("typing")
+
+  useEffect(() => {
+    if (reduced) {
+      return
+    }
+
+    const current = phrases[index % phrases.length] ?? ""
+    let timer: ReturnType<typeof setTimeout>
+
+    if (phase === "typing") {
+      if (text.length < current.length) {
+        timer = setTimeout(() => setText(current.slice(0, text.length + 1)), typeSpeed)
+      } else {
+        timer = setTimeout(() => setPhase("holding"), hold)
+      }
+    } else if (phase === "holding") {
+      timer = setTimeout(() => setPhase("deleting"), hold)
+    } else {
+      if (text.length > 0) {
+        timer = setTimeout(() => setText(current.slice(0, text.length - 1)), deleteSpeed)
+      } else {
+        timer = setTimeout(() => {
+          setIndex((value) => (value + 1) % phrases.length)
+          setPhase("typing")
+        }, deleteSpeed)
+      }
+    }
+
+    return () => clearTimeout(timer)
+  }, [text, phase, index, phrases, typeSpeed, deleteSpeed, hold, reduced])
+
+  return text
+}
+
+// Counts up to a target number when the element scrolls into view.
+function useCountUp(target: number, duration = 1400) {
+  const reduced = prefersReducedMotion()
+  const [value, setValue] = useState(() => (reduced ? target : 0))
+  const ref = useRef<HTMLDivElement | null>(null)
+  const started = useRef(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el || reduced) {
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !started.current) {
+            started.current = true
+            const start = performance.now()
+            const tick = (now: number) => {
+              const progress = Math.min((now - start) / duration, 1)
+              const eased = 1 - Math.pow(1 - progress, 3)
+              setValue(Math.round(eased * target))
+              if (progress < 1) {
+                requestAnimationFrame(tick)
+              }
+            }
+            requestAnimationFrame(tick)
+          }
+        })
+      },
+      { threshold: 0.4 },
+    )
+
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [target, duration, reduced])
+
+  return { ref, value }
+}
+
+function StatChip({ value, suffix, label }: { value: number; suffix: string; label: string }) {
+  const { ref, value: animated } = useCountUp(value)
+
+  return (
+    <div ref={ref} className="stat-chip glass-panel rounded-3xl p-4 text-center">
+      <div className="text-2xl font-black text-slate-950 dark:text-white">
+        {animated}
+        {suffix}
+      </div>
+      <div className="mt-1 text-xs font-semibold text-slate-500 dark:text-slate-400">{label}</div>
+    </div>
+  )
+}
 
 // Reveal-on-scroll: adds .is-visible to any [data-reveal] element when it enters the viewport.
 function useScrollReveal() {
@@ -497,13 +616,23 @@ function useTilt<T extends HTMLElement>() {
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   const { ref, onPointerMove, onPointerLeave } = useTilt<HTMLElement>()
 
+  // Reveal on mount so cards entering via the filter animate in too.
+  useEffect(() => {
+    const el = ref.current
+    if (!el) {
+      return
+    }
+    const frame = requestAnimationFrame(() => el.classList.add("is-visible"))
+    return () => cancelAnimationFrame(frame)
+  }, [ref])
+
   return (
     <article
       ref={ref}
       onPointerMove={onPointerMove}
       onPointerLeave={onPointerLeave}
       data-reveal
-      style={{ ["--reveal-delay" as string]: `${(index % 2) * 90}ms` }}
+      style={{ ["--reveal-delay" as string]: `${(index % 2) * 80}ms` }}
       className="tilt-card group glass-panel relative flex flex-col overflow-hidden rounded-[2rem] border border-white/70 bg-white/80 p-6 shadow-xl shadow-slate-950/5 hover:border-blue-300 hover:shadow-2xl hover:shadow-blue-600/15 dark:border-white/10 dark:bg-white/5 dark:hover:border-blue-300/50"
     >
       <div className="tilt-inner flex flex-1 flex-col">
@@ -566,7 +695,19 @@ function App() {
   const scrollProgress = useScrollProgress()
   const activeSection = useActiveSection()
   const glowRef = useCursorGlow()
+  const typedRole = useTypingRotator(rotatingRoles)
   useScrollReveal()
+
+  const showBackToTop = scrollProgress > 0.08
+
+  const [activeFilter, setActiveFilter] = useState("all")
+  const filteredProjects = useMemo(() => {
+    const filter = projectFilters.find((item) => item.id === activeFilter)
+    if (!filter || filter.tags.length === 0) {
+      return projects
+    }
+    return projects.filter((project) => filter.tags.includes(project.tag))
+  }, [activeFilter])
 
   return (
     <main className="app-shell min-h-screen overflow-hidden bg-[#f8fafc] text-slate-950 transition-colors duration-300 dark:bg-[#06070d] dark:text-white">
@@ -622,11 +763,31 @@ function App() {
               {profile.name}
               <span className="text-gradient block">{profile.englishName}</span>
             </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-300">
+            <p className="mt-5 flex min-h-[2rem] items-center text-lg font-bold text-slate-700 dark:text-slate-200 sm:text-xl">
+              <span className="mr-2 text-blue-600 dark:text-blue-300">▹</span>
+              <span>{typedRole}</span>
+              <span className="typing-caret" aria-hidden="true" />
+            </p>
+            <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-300">
               {profile.summary}
             </p>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-8 flex flex-wrap items-center gap-2">
+              <a href={`mailto:${profile.email}`} className="contact-chip group inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3.5 py-2 text-xs font-bold text-slate-700 transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-300 hover:text-blue-700 dark:border-white/10 dark:bg-white/5 dark:text-slate-200 dark:hover:border-blue-300/40 dark:hover:text-blue-200">
+                <Mail className="size-3.5" aria-hidden="true" />
+                {profile.email}
+              </a>
+              <a href={`tel:${profile.phone.replace(/-/g, "")}`} className="contact-chip group inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3.5 py-2 text-xs font-bold text-slate-700 transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-300 hover:text-blue-700 dark:border-white/10 dark:bg-white/5 dark:text-slate-200 dark:hover:border-blue-300/40 dark:hover:text-blue-200">
+                <Phone className="size-3.5" aria-hidden="true" />
+                {profile.phone}
+              </a>
+              <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3.5 py-2 text-xs font-bold text-slate-700 dark:border-white/10 dark:bg-white/5 dark:text-slate-200">
+                <MapPin className="size-3.5" aria-hidden="true" />
+                Wuhan, China
+              </span>
+            </div>
+
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="lg" className="h-12 cursor-pointer rounded-full bg-blue-600 px-6 text-base font-bold text-white shadow-xl shadow-blue-600/25 transition-all duration-200 hover:bg-blue-500 focus-visible:ring-blue-500">
                 <a href="#projects">
                   查看代表项目
@@ -634,7 +795,7 @@ function App() {
                 </a>
               </Button>
               <Button asChild variant="outline" size="lg" className="h-12 cursor-pointer rounded-full border-slate-300 bg-white/70 px-6 text-base font-bold text-slate-900 backdrop-blur-xl transition-colors duration-200 hover:border-slate-900 hover:bg-slate-950 hover:text-white dark:border-white/15 dark:bg-white/10 dark:text-white dark:hover:bg-white dark:hover:text-slate-950">
-                <a href={`mailto:${profile.email}`}>
+                <a href="#contact">
                   联系我
                   <Send className="size-4" aria-hidden="true" />
                 </a>
@@ -643,10 +804,7 @@ function App() {
 
             <div className="mt-10 grid max-w-xl grid-cols-3 gap-3">
               {stats.map((item) => (
-                <div key={item.label} className="stat-chip glass-panel rounded-3xl p-4 text-center">
-                  <div className="text-2xl font-black text-slate-950 dark:text-white">{item.value}</div>
-                  <div className="mt-1 text-xs font-semibold text-slate-500 dark:text-slate-400">{item.label}</div>
-                </div>
+                <StatChip key={item.label} value={item.value} suffix={item.suffix} label={item.label} />
               ))}
             </div>
 
@@ -712,19 +870,44 @@ function App() {
       </section>
 
       <section id="projects" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:px-10">
-        <div className="mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end" data-reveal>
+        <div className="mb-8 flex flex-col justify-between gap-5 md:flex-row md:items-end" data-reveal>
           <div>
             <p className="section-label">Projects</p>
             <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] text-slate-950 dark:text-white sm:text-5xl">代表项目</h2>
           </div>
+          <div className="flex flex-wrap gap-2" role="tablist" aria-label="项目分类筛选">
+            {projectFilters.map((filter) => {
+              const count = filter.tags.length === 0 ? projects.length : projects.filter((p) => filter.tags.includes(p.tag)).length
+              const isActive = activeFilter === filter.id
+              return (
+                <button
+                  key={filter.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => setActiveFilter(filter.id)}
+                  className={`inline-flex cursor-pointer items-center gap-1.5 rounded-full px-4 py-2 text-sm font-bold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
+                    isActive
+                      ? "bg-blue-600 text-white shadow-lg shadow-blue-600/25"
+                      : "border border-slate-200 bg-white/70 text-slate-600 hover:border-blue-300 hover:text-blue-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:border-blue-300/40"
+                  }`}
+                >
+                  {filter.label}
+                  <span className={`text-xs font-black ${isActive ? "text-blue-100" : "text-slate-400 dark:text-slate-500"}`}>{count}</span>
+                </button>
+              )
+            })}
+          </div>
         </div>
 
         <div className="grid gap-5 lg:grid-cols-2">
-          {projects.map((project, index) => (
+          {filteredProjects.map((project, index) => (
             <ProjectCard key={project.title} project={project} index={index} />
           ))}
         </div>
       </section>
+
+      <div className="section-divider" aria-hidden="true" />
 
       <section id="education" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:px-10">
         <div className="mb-10" data-reveal>
@@ -755,6 +938,8 @@ function App() {
           ))}
         </div>
       </section>
+
+      <div className="section-divider" aria-hidden="true" />
 
       <section id="research" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:px-10">
         <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
@@ -791,6 +976,8 @@ function App() {
         </div>
       </section>
 
+      <div className="section-divider" aria-hidden="true" />
+
       <section id="strengths" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:px-10">
         <div className="mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end" data-reveal>
           <div>
@@ -816,6 +1003,8 @@ function App() {
           })}
         </div>
       </section>
+
+      <div className="section-divider" aria-hidden="true" />
 
       <section id="honors" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 lg:px-10">
         <div className="mb-10 flex flex-col justify-between gap-5 md:flex-row md:items-end" data-reveal>
@@ -884,14 +1073,20 @@ function App() {
               <p className="font-hand text-3xl text-blue-100">Let's build reliable AI systems</p>
               <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] sm:text-5xl">欢迎联系我</h2>
               <p className="mt-5 max-w-2xl text-base leading-8 text-blue-50">
-                欢迎通过邮箱或 GitHub 与我交流，期待你的来信。
+                欢迎通过邮箱、电话或 GitHub 与我交流，期待你的来信。
               </p>
             </div>
-            <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">
+            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:justify-end">
               <Button asChild size="lg" className="h-12 cursor-pointer rounded-full bg-white px-6 text-base font-black text-slate-950 transition-colors duration-200 hover:bg-blue-100">
                 <a href={`mailto:${profile.email}`}>
                   <Mail className="size-4" aria-hidden="true" />
                   {profile.email}
+                </a>
+              </Button>
+              <Button asChild variant="outline" size="lg" className="h-12 cursor-pointer rounded-full border-white/20 bg-white/10 px-6 text-base font-black text-white transition-colors duration-200 hover:bg-white hover:text-slate-950">
+                <a href={`tel:${profile.phone.replace(/-/g, "")}`}>
+                  <Phone className="size-4" aria-hidden="true" />
+                  {profile.phone}
                 </a>
               </Button>
               <Button asChild variant="outline" size="lg" className="h-12 cursor-pointer rounded-full border-white/20 bg-white/10 px-6 text-base font-black text-white transition-colors duration-200 hover:bg-white hover:text-slate-950">
@@ -912,6 +1107,15 @@ function App() {
           <ArrowUpRight className="size-4" aria-hidden="true" />
         </a>
       </footer>
+
+      <button
+        type="button"
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        aria-label="回到顶部"
+        className={`back-to-top fixed bottom-6 right-6 z-50 inline-flex size-12 items-center justify-center rounded-full bg-blue-600 text-white shadow-xl shadow-blue-600/30 transition-all duration-300 hover:bg-blue-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${showBackToTop ? "is-visible" : ""}`}
+      >
+        <ChevronUp className="size-5" aria-hidden="true" />
+      </button>
     </main>
   )
 }

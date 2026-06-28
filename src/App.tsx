@@ -15,7 +15,6 @@ import {
   Mail,
   MapPin,
   Moon,
-  Phone,
   Send,
   Sparkles,
   Sun,
@@ -81,7 +80,6 @@ const profile = {
   role: "服务计算技术与系统教育部重点实验室\n金海-廖小飞系统组",
   location: "Wuhan, China\n2027.06 硕士毕业",
   email: "kimmozrc@qq.com",
-  phone: "133-4618-8054",
   github: "https://github.com/KimmoZAG",
   repo: "https://github.com/KimmoZAG/Intro4kimmo",
   photo: `${import.meta.env.BASE_URL}profile-photo.png`,
@@ -753,7 +751,7 @@ function App() {
           <span />
           <span />
         </div>
-        <div className="grid w-full items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="relative z-10 grid w-full items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
           <div className="animate-rise">
             <Badge variant="outline" className="mb-5 rounded-full border-blue-200 bg-blue-50 px-3 py-1 text-blue-700 dark:border-blue-400/30 dark:bg-blue-400/10 dark:text-blue-200">
               <Sparkles className="size-3.5" aria-hidden="true" />
@@ -777,9 +775,9 @@ function App() {
                 <Mail className="size-3.5" aria-hidden="true" />
                 {profile.email}
               </a>
-              <a href={`tel:${profile.phone.replace(/-/g, "")}`} className="contact-chip group inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3.5 py-2 text-xs font-bold text-slate-700 transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-300 hover:text-blue-700 dark:border-white/10 dark:bg-white/5 dark:text-slate-200 dark:hover:border-blue-300/40 dark:hover:text-blue-200">
-                <Phone className="size-3.5" aria-hidden="true" />
-                {profile.phone}
+              <a href={profile.github} target="_blank" rel="noreferrer" className="contact-chip group inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3.5 py-2 text-xs font-bold text-slate-700 transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-300 hover:text-blue-700 dark:border-white/10 dark:bg-white/5 dark:text-slate-200 dark:hover:border-blue-300/40 dark:hover:text-blue-200">
+                <Github className="size-3.5" aria-hidden="true" />
+                KimmoZAG
               </a>
               <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3.5 py-2 text-xs font-bold text-slate-700 dark:border-white/10 dark:bg-white/5 dark:text-slate-200">
                 <MapPin className="size-3.5" aria-hidden="true" />
@@ -1073,7 +1071,7 @@ function App() {
               <p className="font-hand text-3xl text-blue-100">Let's build reliable AI systems</p>
               <h2 className="mt-3 text-3xl font-black tracking-[-0.04em] sm:text-5xl">欢迎联系我</h2>
               <p className="mt-5 max-w-2xl text-base leading-8 text-blue-50">
-                欢迎通过邮箱、电话或 GitHub 与我交流，期待你的来信。
+                欢迎通过邮箱或 GitHub 与我交流，期待你的来信。
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:justify-end">
@@ -1081,12 +1079,6 @@ function App() {
                 <a href={`mailto:${profile.email}`}>
                   <Mail className="size-4" aria-hidden="true" />
                   {profile.email}
-                </a>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="h-12 cursor-pointer rounded-full border-white/20 bg-white/10 px-6 text-base font-black text-white transition-colors duration-200 hover:bg-white hover:text-slate-950">
-                <a href={`tel:${profile.phone.replace(/-/g, "")}`}>
-                  <Phone className="size-4" aria-hidden="true" />
-                  {profile.phone}
                 </a>
               </Button>
               <Button asChild variant="outline" size="lg" className="h-12 cursor-pointer rounded-full border-white/20 bg-white/10 px-6 text-base font-black text-white transition-colors duration-200 hover:bg-white hover:text-slate-950">
